@@ -1,0 +1,4 @@
+<?php
+
+define('WEDOS_USER', '');
+define('WEDOS_PASS', '');
