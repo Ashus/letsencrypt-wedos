@@ -17,32 +17,28 @@ $r = new \wedosDns01\dnsDomainCommitRequest();
 $r->name = CERTBOT_DOMAIN;
 wedosDns()->dnsDomainCommit($r);
 
-// Loop until updated DNS is online or for 15 minutes
-$time = time();
-while (true) {
-	// Get DNS record
-	$dns = dns_get_record('_acme-challenge' + CERTBOT_DOMAIN, DNS_TXT);
-  
-	if (sizeof($dns) > 0) {
-		$ok = false;
-		
-		// Check if any DNS record is 
-		foreach ($dns as $rec) {
-			if ($rec['txt'] === CERTBOT_VALIDATION) {
-				$ok = true;
-				break;
-			}		
-		}
-		
-		if ($ok) break;
-	}
+// Loop until updated DNS is online or for 20 minutes
+$waitForPropagation = function () {
+	$startTime = time();
+	while (true) {
+		$records = dns_get_record('_acme-challenge.' . CERTBOT_DOMAIN, DNS_TXT);
 
-	// Wait 10s before next request
-	sleep(10);
-		
-	// Don't stay in the loop for longer than 15 minutes
-	if ((time() - $time) >= (15 * 60)) break;
-}
+		if (count($records)) {
+			foreach ($records as $rec) {
+				if (isset($rec['txt']) && $rec['txt'] === CERTBOT_VALIDATION) {
+					return true;
+				}
+			}
+		}
+
+		if ((time() - $startTime) >= (20 * 60))
+			return false;
+
+		sleep(30);
+	}
+	return false;
+};
+$waitForPropagation();
 
 // Give some extra time to the DNS to make sure its updated everywhere
 sleep(30);

@@ -2,14 +2,14 @@
 Skripty pro validaci přes DNS záznamy (metoda DNS-01) vedené u Wedosu umožňující validaci wildcard certifikátů.
 
 ## Požadavky
-* PHP 5.4+ CLI (curl, json)
+* PHP 5.4 - 7+ CLI (curl, json)
 * aktuální certbot na Linuxu, nastavený server acme-v02
 * DNS záznamy hostované u Wedosu
 * u Wedosu zapnuté rozhraní WAPI
 
 Certbot při generování wildcard certifikátů automaticky volí metodu validace DNS-01. Také však pro úplný DNS záznam potřebuje mít funkční metodu validace HTTP-01.
 
-Tato sada skriptů podporuje oboje. Vzhledem k časové náročnosti replikace změn DNS zázamů je potřeba čekat na dokončení přidání DNS záznamu, skript čeká maximálně 15 minut (900s) nebo dokud nejsou viditelné. Po validaci certbot zahájí čištění DNS záznamu a volá ho se stejnými parametry, tedy je po použití vymazán jen záznam, který tam byl vložen.
+Tato sada skriptů podporuje oboje. Vzhledem k časové náročnosti replikace změn DNS zázamů je potřeba čekat na dokončení přidání DNS záznamu, skript čeká dokud nejsou viditelné, maximálně však 20 minut. Po validaci certbot zahájí čištění DNS záznamu a volá ho se stejnými parametry, tedy je po použití vymazán jen záznam, který tam byl vložen.
 
 
 ## Instalace
