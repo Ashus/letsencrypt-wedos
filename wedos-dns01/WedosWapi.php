@@ -15,6 +15,7 @@ class WedosWapi {
 	 * @return string
 	 */
 	private function generateHash() {
+		date_default_timezone_set("Europe/Prague");
 		return sha1($this->login . sha1($this->wapiPass) . date('H', time()));
 	}
 
