@@ -1,0 +1,15 @@
+{
+	"name": "ashus/letsencrypt-wedos",
+	"config": {
+		"platform": {
+			"php": "7.0"
+		},
+		"vendor-dir": "vendor"
+	},
+	"require": {
+		"jeremykendall/php-domain-parser": "^5.5",
+		"ext-curl": "*",
+		"ext-json": "*",
+		"ext-intl": "*"
+	}
+}

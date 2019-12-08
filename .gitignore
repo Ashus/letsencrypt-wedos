@@ -1,3 +1,5 @@
 /.idea
-/http01/config.php
-/wedos-dns01/config.php
+/auth-methods/http01/config.php
+/auth-methods/wedos-dns01/config.php
+/cache/*
+!/cache/.empty

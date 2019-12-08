@@ -1,4 +1,4 @@
 #!/usr/bin/php
 <?php
 require __DIR__ . '/initialize.php';
-require __DIR__ . '/' . AUTH_METHOD . '/authenticator.php';
+require __DIR__ . '/auth-methods/' . AUTH_METHOD . '/authenticator.php';

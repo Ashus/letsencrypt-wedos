@@ -2,7 +2,7 @@
 Skripty pro validaci přes DNS záznamy (metoda DNS-01) vedené u Wedosu umožňující validaci wildcard certifikátů.
 
 ## Požadavky
-* PHP 5.4 - 7+ CLI (curl, json)
+* PHP 7.0+ CLI (rozšíření: curl, json, intl)
 * aktuální certbot na Linuxu, nastavený server acme-v02
 * DNS záznamy hostované u Wedosu
 * u Wedosu zapnuté rozhraní WAPI
@@ -11,14 +11,16 @@ Certbot při generování wildcard certifikátů automaticky volí metodu valida
 
 Tato sada skriptů podporuje oboje. Vzhledem k časové náročnosti replikace změn DNS zázamů je potřeba čekat na dokončení přidání DNS záznamu, skript čeká dokud nejsou viditelné, maximálně však 20 minut. Po validaci certbot zahájí čištění DNS záznamu a volá ho se stejnými parametry, tedy je po použití vymazán jen záznam, který tam byl vložen.
 
+Jsou podporovány i wildcard domény dalších řádů, např. \*.subdomena.domena.tld, ale systém rozpozná také zvláštní veřejné domény umožňující registrace třetího řádu (\*.domena.co.uk).
 
 ## Instalace
 * nahrajte obsah do složky _/etc/letsencrypt/scripts/_
 * nastavte oprávnění +x souborům _authenticator.php_ a _cleanup.php_
-* ve složce http01 zkopírujte _config.php.dist_ do _config.php_ a do jeho obsahu nastavte webroot
-* ve složce wedos-dns01 zkopírujte _config.php.dist_ do _config.php_ a do jeho obsahu vložte váš přihlašovací e-mail a WAPI heslo
+* nastavte oprávnění +w do složky cache/
+* ve složce _auth-methods/http01_ zkopírujte _config.php.dist_ do _config.php_ a do jeho obsahu nastavte webroot
+* ve složce _auth-methods/wedos-dns01_ zkopírujte _config.php.dist_ do _config.php_ a do jeho obsahu vložte váš přihlašovací e-mail a WAPI heslo
 * nastavte _/etc/letsencrypt/cli.ini_ dle konfigurace níže:
-* otestujte: _certbot certonly -d domena -d *.domena_
+* otestujte: _certbot certonly -d domena.tld -d \*.domena.tld --dry-run_
 
 ## Ukázková konfigurace cli.ini
 ```ini

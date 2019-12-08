@@ -2,8 +2,8 @@
 require_once __DIR__ . '/initialize.php';
 
 $r = new \wedosDns01\dnsRowAddRequest();
-$r->domain = $secondLevelDomain;
-$r->name = $dnsName;
+$r->domain = REGISTRABLE_DOMAIN;
+$r->name = DNS_ENTRY_NAME;
 $r->type = 'TXT';
 $r->ttl = 600;
 $r->rdata = CERTBOT_VALIDATION;
@@ -14,7 +14,7 @@ if ($done !== true) {
 }
 
 $r = new \wedosDns01\dnsDomainCommitRequest();
-$r->name = $secondLevelDomain;
+$r->name = REGISTRABLE_DOMAIN;
 wedosDns()->dnsDomainCommit($r);
 
 // Loop until updated DNS is online or for 20 minutes
@@ -41,4 +41,4 @@ $waitForPropagation = function () {
 $waitForPropagation();
 
 // Give some extra time to the DNS to make sure its updated everywhere
-sleep(30);
+sleep(2.5 * 60);
