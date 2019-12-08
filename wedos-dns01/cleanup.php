@@ -2,11 +2,11 @@
 require_once __DIR__ . '/initialize.php';
 
 $r = new \wedosDns01\dnsRowsListRequest();
-$r->domain = CERTBOT_DOMAIN;
+$r->domain = $secondLevelDomain;
 $list = wedosDns()->dnsRowsList($r);
 
 foreach ($list as $dnsEntry) {
-	if ($dnsEntry->name !== '_acme-challenge')
+	if ($dnsEntry->name !== $dnsName)
 		continue;
 	if ($dnsEntry->rdata !== CERTBOT_VALIDATION)
 		continue;

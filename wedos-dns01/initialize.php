@@ -10,3 +10,12 @@ function wedosDns() {
 		$instance = new \wedosDns01\WedosDns(WEDOS_USER, WEDOS_PASS);
 	return $instance;
 }
+
+$domainParts = explode('.', CERTBOT_DOMAIN);
+$dnsName = '_acme-challenge';
+$secondLevelDomain = implode('.', (array_slice($domainParts, -2, 2)));
+
+if (count($domainParts) > 2) {
+	array_splice($domainParts, -2);
+	$dnsName .= '.' . implode('.', $domainParts);
+}

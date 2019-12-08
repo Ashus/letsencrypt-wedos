@@ -2,8 +2,8 @@
 require_once __DIR__ . '/initialize.php';
 
 $r = new \wedosDns01\dnsRowAddRequest();
-$r->domain = CERTBOT_DOMAIN;
-$r->name = '_acme-challenge';
+$r->domain = $secondLevelDomain;
+$r->name = $dnsName;
 $r->type = 'TXT';
 $r->ttl = 600;
 $r->rdata = CERTBOT_VALIDATION;
@@ -14,7 +14,7 @@ if ($done !== true) {
 }
 
 $r = new \wedosDns01\dnsDomainCommitRequest();
-$r->name = CERTBOT_DOMAIN;
+$r->name = $secondLevelDomain;
 wedosDns()->dnsDomainCommit($r);
 
 // Loop until updated DNS is online or for 20 minutes
